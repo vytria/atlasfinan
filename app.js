@@ -16,6 +16,7 @@
   <div class="card"><span id="percentual"></span><small>% Comprometido</small></div>
 </div>
 </header>
+  
 
 <main>
 <select id="mes"></select>
