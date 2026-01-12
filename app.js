@@ -1,39 +1,30 @@
-function showTab(id){
-  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Atlas – Controle Financeiro</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
 
-showTab("geral");
+<header>
+<h2>Atlas – Controle Financeiro</h2>
+<div class="cards">
+  <div class="card"><span id="receita"></span><small>Receita</small></div>
+  <div class="card"><span id="despesa"></span><small>Despesa</small></div>
+  <div class="card"><span id="saldo"></span><small>Saldo</small></div>
+  <div class="card"><span id="percentual"></span><small>% Comprometido</small></div>
+</div>
+</header>
 
-Promise.all([
- fetch("data/base-geral.json").then(r=>r.json()),
- fetch("data/base-mensal.json").then(r=>r.json()),
- fetch("data/base-anual.json").then(r=>r.json())
-]).then(([geral, mensal, anual])=>{
+<main>
+<select id="mes"></select>
+<canvas id="chart"></canvas>
+<table id="table"></table>
+</main>
 
-  let receita = 0, despesa = 0;
+<script src="data.js"></script>
+<script src="app.js"></script>
 
-  let html = "<table><tr><th>Data</th><th>Conta</th><th>Tipo</th><th>Valor</th></tr>";
-  geral.forEach(t=>{
-    if(t.tipo==="IN") receita+=t.valor;
-    else despesa+=t.valor;
-
-    html+=`<tr><td>${t.data}</td><td>${t.conta}</td><td>${t.tipo}</td><td>R$ ${t.valor}</td></tr>`;
-  });
-  html+="</table>";
-  document.getElementById("geral").innerHTML = html;
-
-  document.getElementById("receita").innerText = "R$ "+receita;
-  document.getElementById("despesa").innerText = "R$ "+despesa;
-  document.getElementById("saldo").innerText = "R$ "+(receita-despesa);
-  document.getElementById("meses").innerText = mensal.length;
-
-  new Chart(document.getElementById("chart"),{
-    type:"bar",
-    data:{
-      labels:["Receita","Despesa"],
-      datasets:[{data:[receita,despesa]}]
-    }
-  });
-
-});
+</body>
+</html>
