@@ -1,5 +1,0 @@
-[
-  {"data":"2026-01-10","conta":"Banco","tipo":"IN","valor":5000},
-  {"data":"2026-01-12","conta":"Cartão","tipo":"OUT","valor":1200},
-  {"data":"2026-01-20","conta":"Banco","tipo":"OUT","valor":800}
-]

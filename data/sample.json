@@ -1,5 +1,0 @@
-[
-  { "date": "2026-01-10", "account": "Banco", "owner": "João", "type": "IN", "value": 5000 },
-  { "date": "2026-01-12", "account": "Cartão", "owner": "João", "type": "OUT", "value": 1200 },
-  { "date": "2026-01-20", "account": "Banco", "owner": "João", "type": "OUT", "value": 800 }
-]
