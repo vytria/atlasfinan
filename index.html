@@ -1,41 +1,43 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Atlas – Controle Financeiro</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<meta charset="UTF-8">
+<title>Atlas – Controle Financeiro</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
+<div class="app">
 
 <header>
   <h1>Atlas – Controle Financeiro</h1>
-  <div class="kpis">
-    <div><span id="saldo">R$ 0</span><small>Saldo</small></div>
-    <div><span id="receita">R$ 0</span><small>Receita</small></div>
-    <div><span id="despesa">R$ 0</span><small>Despesa</small></div>
-    <div><span id="runway">0 meses</span><small>Runway</small></div>
+  <div class="cards">
+    <div class="card"><span id="receita">R$ 0</span><small>Receita</small></div>
+    <div class="card"><span id="despesa">R$ 0</span><small>Despesa</small></div>
+    <div class="card"><span id="saldo">R$ 0</span><small>Saldo</small></div>
+    <div class="card"><span id="meses">0</span><small>Meses</small></div>
   </div>
 </header>
 
-<main>
-  <canvas id="chart"></canvas>
+<nav>
+  <button onclick="showTab('geral')">Lançamentos</button>
+  <button onclick="showTab('mensal')">Mensal</button>
+  <button onclick="showTab('anual')">Anual</button>
+  <button onclick="showTab('graficos')">Gráficos</button>
+</nav>
 
-  <h2>Lançamentos</h2>
-  <table id="table">
-    <thead>
-      <tr>
-        <th>Data</th>
-        <th>Conta</th>
-        <th>Dono</th>
-        <th>Tipo</th>
-        <th>Valor</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+<main>
+  <section id="geral" class="tab"></section>
+  <section id="mensal" class="tab"></section>
+  <section id="anual" class="tab"></section>
+  <section id="graficos" class="tab">
+    <canvas id="chart"></canvas>
+  </section>
 </main>
+
+</div>
 
 <script src="app.js"></script>
 </body>
-</html>
+</h
