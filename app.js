@@ -1,41 +1,39 @@
-fetch("data/sample.json")
-  .then(r => r.json())
-  .then(data => {
+function showTab(id){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
 
-    let receita = 0;
-    let despesa = 0;
+showTab("geral");
 
-    const tbody = document.querySelector("#table tbody");
+Promise.all([
+ fetch("data/base-geral.json").then(r=>r.json()),
+ fetch("data/base-mensal.json").then(r=>r.json()),
+ fetch("data/base-anual.json").then(r=>r.json())
+]).then(([geral, mensal, anual])=>{
 
-    data.forEach(t => {
-      if (t.type === "IN") receita += t.value;
-      else despesa += t.value;
+  let receita = 0, despesa = 0;
 
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${t.date}</td>
-        <td>${t.account}</td>
-        <td>${t.owner}</td>
-        <td>${t.type}</td>
-        <td>R$ ${t.value.toFixed(2)}</td>
-      `;
-      tbody.appendChild(tr);
-    });
+  let html = "<table><tr><th>Data</th><th>Conta</th><th>Tipo</th><th>Valor</th></tr>";
+  geral.forEach(t=>{
+    if(t.tipo==="IN") receita+=t.valor;
+    else despesa+=t.valor;
 
-    const saldo = receita - despesa;
-
-    document.getElementById("saldo").innerText = `R$ ${saldo.toFixed(2)}`;
-    document.getElementById("receita").innerText = `R$ ${receita.toFixed(2)}`;
-    document.getElementById("despesa").innerText = `R$ ${despesa.toFixed(2)}`;
-    document.getElementById("runway").innerText = despesa > 0 ? (saldo / despesa).toFixed(1) + " meses" : "∞";
-
-    new Chart(document.getElementById("chart"), {
-      type: "bar",
-      data: {
-        labels: ["Receita", "Despesa"],
-        datasets: [{
-          data: [receita, despesa]
-        }]
-      }
-    });
+    html+=`<tr><td>${t.data}</td><td>${t.conta}</td><td>${t.tipo}</td><td>R$ ${t.valor}</td></tr>`;
   });
+  html+="</table>";
+  document.getElementById("geral").innerHTML = html;
+
+  document.getElementById("receita").innerText = "R$ "+receita;
+  document.getElementById("despesa").innerText = "R$ "+despesa;
+  document.getElementById("saldo").innerText = "R$ "+(receita-despesa);
+  document.getElementById("meses").innerText = mensal.length;
+
+  new Chart(document.getElementById("chart"),{
+    type:"bar",
+    data:{
+      labels:["Receita","Despesa"],
+      datasets:[{data:[receita,despesa]}]
+    }
+  });
+
+});
